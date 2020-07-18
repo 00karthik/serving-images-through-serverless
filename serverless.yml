@@ -1,0 +1,25 @@
+service: 'my-serverless'
+name: serverless
+include:
+    - my-image.png
+plugins:
+  - serverless-offline
+  - serverless-apigw-binary
+custom:
+  apigwBinary:
+    types:
+      - '*/*'
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiGateway:
+    minimumCompressionSize: 1024
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: /
